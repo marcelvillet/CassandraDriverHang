@@ -115,7 +115,7 @@ CREATE TABLE test (
 
             int level = TaskScheduler.Current.MaximumConcurrencyLevel;
 
-            //RunTasks(50, true);
+            RunTasks(50, true);
             //RunThreads(50, true);
             //RunParallel(50, true);
             /*
@@ -128,7 +128,7 @@ CREATE TABLE test (
             thread.Join();
             */
 
-            RunTasks2(50, true);
+            //RunTasks2(50, true);
 
             WriteLine("Done");
 
