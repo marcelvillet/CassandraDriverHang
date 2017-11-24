@@ -159,27 +159,17 @@ CREATE TABLE test (
                 values[i] = Convert.ToBase64String(bytes);
             }
 
-            //WriteLine("A");
-
             var bs = PsInsert.Bind(values);
-
-            //WriteLine("B");
 
             if (useAsync)
             {
-                //WriteLine("C");
-
                 var task = Session.ExecuteAsync(bs);
                 task.Wait();
             }
             else
             {
-                //WriteLine("D");
-
                 Session.Execute(bs);
             }
-
-            //WriteLine("E");
 
             if (Debug)
                 WriteLine("EXIT: Insert " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fffZ"));
@@ -270,28 +260,18 @@ CREATE TABLE test (
                 values[i] = Convert.ToBase64String(bytes);
             }
 
-            //WriteLine("A");
-
             var bs = PsInsert.Bind(values);
-
-            //WriteLine("B");
 
             Task task = null;
             if (useAsync)
             {
-                //WriteLine("C");
-
                 task = Session.ExecuteAsync(bs);
             }
             else
             {
-                //WriteLine("D");
-
                 Session.Execute(bs);
                 task = Task.CompletedTask;
             }
-
-            //WriteLine("E");
 
             if (Debug)
                 WriteLine("EXIT: Insert " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fffZ"));
