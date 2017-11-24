@@ -116,8 +116,8 @@ CREATE TABLE test (
             int level = TaskScheduler.Current.MaximumConcurrencyLevel;
 
             //RunTasks(50, true);
-            RunTasks2(50, true);
-            //RunThreads(1000, true);
+            //RunThreads(50, true);
+            //RunParallel(50, true);
             /*
             Thread thread = new Thread(() =>
             {
@@ -127,6 +127,8 @@ CREATE TABLE test (
             thread.Start();
             thread.Join();
             */
+
+            RunTasks2(50, true);
 
             WriteLine("Done");
 
@@ -204,7 +206,7 @@ CREATE TABLE test (
             }
             Task.WaitAll(tasks);
         }
-                
+
         private static void RunThreads(int noTasks, bool useAsync)
         {
             var tasks = new Thread[noTasks];
@@ -225,6 +227,11 @@ CREATE TABLE test (
             }
         }
 
+        private static void RunParallel(int noTasks, bool useAsync)
+        {
+            Parallel.For(0, noTasks, new ParallelOptions { MaxDegreeOfParallelism = noTasks }, (index) => RunTask(index, useAsync));
+        }
+
         private static void RunTask(int id, bool useAsync)
         {
             WriteLine($"Start task {id}...");
@@ -232,7 +239,7 @@ CREATE TABLE test (
             var now = DateTime.UtcNow;
 
             Insert(id, useAsync);
-                        
+
             //Select(id, useAsync);
 
             var done = DateTime.UtcNow;
@@ -278,7 +285,7 @@ CREATE TABLE test (
 
             return task;
         }
-        
+
         private static void RunTasks2(int noTasks, bool useAsync)
         {
             var tasks = new Task[noTasks];
@@ -290,7 +297,7 @@ CREATE TABLE test (
             }
             Task.WaitAll(tasks);
         }
-        
+
         private static async Task RunTask2(int id, bool useAsync)
         {
             WriteLine($"Start task {id}...");
